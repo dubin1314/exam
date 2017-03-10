@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="exam.com.cn.db.dao.PaperQuestionSettingMapper" >
+  <resultMap id="BaseResultMap" type="exam.com.cn.db.model.PaperQuestionSetting" >
+    <id column="P_ID" property="pId" jdbcType="VARCHAR" />
+    <result column="P_TEST_PAPER_ID" property="pTestPaperId" jdbcType="VARCHAR" />
+    <result column="P_ CLASSIFY_ID" property="pClassifyId" jdbcType="VARCHAR" />
+    <result column="P_ QUESTION_ID" property="pQuestionId" jdbcType="VARCHAR" />
+    <result column="P_ QUESTION_ SCORE" property="pQuestionScore" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    P_ID, P_TEST_PAPER_ID, "P_ CLASSIFY_ID", "P_ QUESTION_ID", "P_ QUESTION_ SCORE"
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="exam.com.cn.db.model.PaperQuestionSettingQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from "paper_ question_setting"
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from "paper_ question_setting"
+    where P_ID = #{pId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from "paper_ question_setting"
+    where P_ID = #{pId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="exam.com.cn.db.model.PaperQuestionSettingQuery" >
+    delete from "paper_ question_setting"
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="exam.com.cn.db.model.PaperQuestionSetting" >
+    insert into "paper_ question_setting" (P_ID, P_TEST_PAPER_ID, "P_ CLASSIFY_ID", 
+      "P_ QUESTION_ID", "P_ QUESTION_ SCORE")
+    values (#{pId,jdbcType=VARCHAR}, #{pTestPaperId,jdbcType=VARCHAR}, #{pClassifyId,jdbcType=VARCHAR}, 
+      #{pQuestionId,jdbcType=VARCHAR}, #{pQuestionScore,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="exam.com.cn.db.model.PaperQuestionSetting" >
+    insert into "paper_ question_setting"
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        P_ID,
+      </if>
+      <if test="pTestPaperId != null" >
+        P_TEST_PAPER_ID,
+      </if>
+      <if test="pClassifyId != null" >
+        "P_ CLASSIFY_ID",
+      </if>
+      <if test="pQuestionId != null" >
+        "P_ QUESTION_ID",
+      </if>
+      <if test="pQuestionScore != null" >
+        "P_ QUESTION_ SCORE",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="pTestPaperId != null" >
+        #{pTestPaperId,jdbcType=VARCHAR},
+      </if>
+      <if test="pClassifyId != null" >
+        #{pClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="pQuestionId != null" >
+        #{pQuestionId,jdbcType=VARCHAR},
+      </if>
+      <if test="pQuestionScore != null" >
+        #{pQuestionScore,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="exam.com.cn.db.model.PaperQuestionSettingQuery" resultType="java.lang.Integer" >
+    select count(*) from "paper_ question_setting"
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update "paper_ question_setting"
+    <set >
+      <if test="record.pId != null" >
+        P_ID = #{record.pId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pTestPaperId != null" >
+        P_TEST_PAPER_ID = #{record.pTestPaperId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pClassifyId != null" >
+        "P_ CLASSIFY_ID" = #{record.pClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pQuestionId != null" >
+        "P_ QUESTION_ID" = #{record.pQuestionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pQuestionScore != null" >
+        "P_ QUESTION_ SCORE" = #{record.pQuestionScore,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update "paper_ question_setting"
+    set P_ID = #{record.pId,jdbcType=VARCHAR},
+      P_TEST_PAPER_ID = #{record.pTestPaperId,jdbcType=VARCHAR},
+      "P_ CLASSIFY_ID" = #{record.pClassifyId,jdbcType=VARCHAR},
+      "P_ QUESTION_ID" = #{record.pQuestionId,jdbcType=VARCHAR},
+      "P_ QUESTION_ SCORE" = #{record.pQuestionScore,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="exam.com.cn.db.model.PaperQuestionSetting" >
+    update "paper_ question_setting"
+    <set >
+      <if test="pTestPaperId != null" >
+        P_TEST_PAPER_ID = #{pTestPaperId,jdbcType=VARCHAR},
+      </if>
+      <if test="pClassifyId != null" >
+        "P_ CLASSIFY_ID" = #{pClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="pQuestionId != null" >
+        "P_ QUESTION_ID" = #{pQuestionId,jdbcType=VARCHAR},
+      </if>
+      <if test="pQuestionScore != null" >
+        "P_ QUESTION_ SCORE" = #{pQuestionScore,jdbcType=INTEGER},
+      </if>
+    </set>
+    where P_ID = #{pId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="exam.com.cn.db.model.PaperQuestionSetting" >
+    update "paper_ question_setting"
+    set P_TEST_PAPER_ID = #{pTestPaperId,jdbcType=VARCHAR},
+      "P_ CLASSIFY_ID" = #{pClassifyId,jdbcType=VARCHAR},
+      "P_ QUESTION_ID" = #{pQuestionId,jdbcType=VARCHAR},
+      "P_ QUESTION_ SCORE" = #{pQuestionScore,jdbcType=INTEGER}
+    where P_ID = #{pId,jdbcType=VARCHAR}
+  </update>
+</mapper>

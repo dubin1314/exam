@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="exam.com.cn.db.dao.UserInfoMapper">
+	<resultMap id="BaseResultMap" type="exam.com.cn.db.model.UserInfo">
+		<id column="U_ID" property="uId" jdbcType="VARCHAR" />
+		<result column="U_CANDIDATE_NUMBER" property="uCandidateNumber"
+			jdbcType="VARCHAR" />
+		<result column="U_PASSWORD" property="uPassword" jdbcType="VARCHAR" />
+		<result column="U_NAME" property="uName" jdbcType="VARCHAR" />
+		<result column="U_SEX" property="uSex" jdbcType="VARCHAR" />
+		<result column="U_MOBILE_PHONE" property="uMobilePhone"
+			jdbcType="VARCHAR" />
+		<result column="U_ID_CARD" property="uIdCard" jdbcType="VARCHAR" />
+		<result column="U_SUBORDINATE_UNITS" property="uSubordinateUnits"
+			jdbcType="VARCHAR" />
+		<result column="U_BATCH" property="uBatch" jdbcType="VARCHAR" />
+		<result column="U_CREATE_TIME" property="uCreateTime" jdbcType="TIMESTAMP" />
+		<result column="U_UPDATE_TIME" property="uUpdateTime" jdbcType="TIMESTAMP" />
+		<result column="U_STATUS" property="uStatus" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		U_ID, U_CANDIDATE_NUMBER, U_PASSWORD, U_NAME, U_SEX,
+		U_MOBILE_PHONE,
+		U_ID_CARD, U_SUBORDINATE_UNITS,
+		U_BATCH, U_CREATE_TIME,
+		U_UPDATE_TIME, U_STATUS
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="exam.com.cn.db.model.UserInfoQuery">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from user_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where U_ID = #{uId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		user_info
+		where U_ID = #{uId,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="exam.com.cn.db.model.UserInfoQuery">
+		delete from user_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="exam.com.cn.db.model.UserInfo">
+		insert into user_info (U_ID,
+		U_CANDIDATE_NUMBER, U_PASSWORD,
+		U_NAME, U_SEX, U_MOBILE_PHONE,
+		U_ID_CARD, U_SUBORDINATE_UNITS, U_BATCH,
+		U_CREATE_TIME, U_UPDATE_TIME,
+		U_STATUS
+		)
+		values (#{uId,jdbcType=VARCHAR},
+		#{uCandidateNumber,jdbcType=VARCHAR},
+		#{uPassword,jdbcType=VARCHAR},
+		#{uName,jdbcType=VARCHAR}, #{uSex,jdbcType=VARCHAR},
+		#{uMobilePhone,jdbcType=VARCHAR},
+		#{uIdCard,jdbcType=VARCHAR},
+		#{uSubordinateUnits,jdbcType=VARCHAR},
+		#{uBatch,jdbcType=VARCHAR},
+		#{uCreateTime,jdbcType=TIMESTAMP}, #{uUpdateTime,jdbcType=TIMESTAMP},
+		#{uStatus,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="exam.com.cn.db.model.UserInfo">
+		insert into user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uId != null">
+				U_ID,
+			</if>
+			<if test="uCandidateNumber != null">
+				U_CANDIDATE_NUMBER,
+			</if>
+			<if test="uPassword != null">
+				U_PASSWORD,
+			</if>
+			<if test="uName != null">
+				U_NAME,
+			</if>
+			<if test="uSex != null">
+				U_SEX,
+			</if>
+			<if test="uMobilePhone != null">
+				U_MOBILE_PHONE,
+			</if>
+			<if test="uIdCard != null">
+				U_ID_CARD,
+			</if>
+			<if test="uSubordinateUnits != null">
+				U_SUBORDINATE_UNITS,
+			</if>
+			<if test="uBatch != null">
+				U_BATCH,
+			</if>
+			<if test="uCreateTime != null">
+				U_CREATE_TIME,
+			</if>
+			<if test="uUpdateTime != null">
+				U_UPDATE_TIME,
+			</if>
+			<if test="uStatus != null">
+				U_STATUS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uId != null">
+				#{uId,jdbcType=VARCHAR},
+			</if>
+			<if test="uCandidateNumber != null">
+				#{uCandidateNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="uPassword != null">
+				#{uPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="uName != null">
+				#{uName,jdbcType=VARCHAR},
+			</if>
+			<if test="uSex != null">
+				#{uSex,jdbcType=VARCHAR},
+			</if>
+			<if test="uMobilePhone != null">
+				#{uMobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="uIdCard != null">
+				#{uIdCard,jdbcType=VARCHAR},
+			</if>
+			<if test="uSubordinateUnits != null">
+				#{uSubordinateUnits,jdbcType=VARCHAR},
+			</if>
+			<if test="uBatch != null">
+				#{uBatch,jdbcType=VARCHAR},
+			</if>
+			<if test="uCreateTime != null">
+				#{uCreateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="uUpdateTime != null">
+				#{uUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="uStatus != null">
+				#{uStatus,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="exam.com.cn.db.model.UserInfoQuery"
+		resultType="java.lang.Integer">
+		select count(*) from user_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update user_info
+		<set>
+			<if test="record.uId != null">
+				U_ID = #{record.uId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uCandidateNumber != null">
+				U_CANDIDATE_NUMBER =
+				#{record.uCandidateNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uPassword != null">
+				U_PASSWORD = #{record.uPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uName != null">
+				U_NAME = #{record.uName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uSex != null">
+				U_SEX = #{record.uSex,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uMobilePhone != null">
+				U_MOBILE_PHONE = #{record.uMobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uIdCard != null">
+				U_ID_CARD = #{record.uIdCard,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uSubordinateUnits != null">
+				U_SUBORDINATE_UNITS =
+				#{record.uSubordinateUnits,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uBatch != null">
+				U_BATCH = #{record.uBatch,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uCreateTime != null">
+				U_CREATE_TIME = #{record.uCreateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.uUpdateTime != null">
+				U_UPDATE_TIME = #{record.uUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.uStatus != null">
+				U_STATUS = #{record.uStatus,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update user_info
+		set U_ID = #{record.uId,jdbcType=VARCHAR},
+		U_CANDIDATE_NUMBER = #{record.uCandidateNumber,jdbcType=VARCHAR},
+		U_PASSWORD = #{record.uPassword,jdbcType=VARCHAR},
+		U_NAME =
+		#{record.uName,jdbcType=VARCHAR},
+		U_SEX =
+		#{record.uSex,jdbcType=VARCHAR},
+		U_MOBILE_PHONE =
+		#{record.uMobilePhone,jdbcType=VARCHAR},
+		U_ID_CARD =
+		#{record.uIdCard,jdbcType=VARCHAR},
+		U_SUBORDINATE_UNITS =
+		#{record.uSubordinateUnits,jdbcType=VARCHAR},
+		U_BATCH =
+		#{record.uBatch,jdbcType=VARCHAR},
+		U_CREATE_TIME =
+		#{record.uCreateTime,jdbcType=TIMESTAMP},
+		U_UPDATE_TIME =
+		#{record.uUpdateTime,jdbcType=TIMESTAMP},
+		U_STATUS =
+		#{record.uStatus,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="exam.com.cn.db.model.UserInfo">
+		update user_info
+		<set>
+			<if test="uCandidateNumber != null">
+				U_CANDIDATE_NUMBER =
+				#{uCandidateNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="uPassword != null">
+				U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="uName != null">
+				U_NAME = #{uName,jdbcType=VARCHAR},
+			</if>
+			<if test="uSex != null">
+				U_SEX = #{uSex,jdbcType=VARCHAR},
+			</if>
+			<if test="uMobilePhone != null">
+				U_MOBILE_PHONE = #{uMobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="uIdCard != null">
+				U_ID_CARD = #{uIdCard,jdbcType=VARCHAR},
+			</if>
+			<if test="uSubordinateUnits != null">
+				U_SUBORDINATE_UNITS =
+				#{uSubordinateUnits,jdbcType=VARCHAR},
+			</if>
+			<if test="uBatch != null">
+				U_BATCH = #{uBatch,jdbcType=VARCHAR},
+			</if>
+			<if test="uCreateTime != null">
+				U_CREATE_TIME = #{uCreateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="uUpdateTime != null">
+				U_UPDATE_TIME = #{uUpdateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="uStatus != null">
+				U_STATUS = #{uStatus,jdbcType=INTEGER},
+			</if>
+		</set>
+		where U_ID = #{uId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="exam.com.cn.db.model.UserInfo">
+		update user_info
+		set U_CANDIDATE_NUMBER = #{uCandidateNumber,jdbcType=VARCHAR},
+		U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
+		U_NAME =
+		#{uName,jdbcType=VARCHAR},
+		U_SEX = #{uSex,jdbcType=VARCHAR},
+		U_MOBILE_PHONE = #{uMobilePhone,jdbcType=VARCHAR},
+		U_ID_CARD =
+		#{uIdCard,jdbcType=VARCHAR},
+		U_SUBORDINATE_UNITS =
+		#{uSubordinateUnits,jdbcType=VARCHAR},
+		U_BATCH =
+		#{uBatch,jdbcType=VARCHAR},
+		U_CREATE_TIME =
+		#{uCreateTime,jdbcType=TIMESTAMP},
+		U_UPDATE_TIME =
+		#{uUpdateTime,jdbcType=TIMESTAMP},
+		U_STATUS =
+		#{uStatus,jdbcType=INTEGER}
+		where U_ID = #{uId,jdbcType=VARCHAR}
+	</update>
+	<!-- yj 自定义查询方法，根据年月和身份证号前三位查询考生信息 -->
+	<select id="selectByDateAndCardNumber" resultMap="BaseResultMap">
+		select
+		*
+		from
+		USER_INFO
+		where U_Candidate_Number like
+		#{dateAndCardNumber,jdbcType=VARCHAR}
+		order by
+		U_Candidate_Number
+		asc
+		limit 1
+	</select>
+</mapper>

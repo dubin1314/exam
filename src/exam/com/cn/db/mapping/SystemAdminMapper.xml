@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="exam.com.cn.db.dao.SystemAdminMapper" >
+  <resultMap id="BaseResultMap" type="exam.com.cn.db.model.SystemAdmin" >
+    <id column="S_ID" property="sId" jdbcType="VARCHAR" />
+    <result column="S_NAME" property="sName" jdbcType="VARCHAR" />
+    <result column="S_PASSWORD" property="sPassword" jdbcType="VARCHAR" />
+    <result column="S_DESCRIPTION" property="sDescription" jdbcType="VARCHAR" />
+    <result column="S_CREATE_TIME" property="sCreateTime" jdbcType="TIMESTAMP" />
+    <result column="S_UPDATE_TIME" property="sUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    S_ID, S_NAME, S_PASSWORD, S_DESCRIPTION, S_CREATE_TIME, S_UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="exam.com.cn.db.model.SystemAdminQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from system_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_admin
+    where S_ID = #{sId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from system_admin
+    where S_ID = #{sId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="exam.com.cn.db.model.SystemAdminQuery" >
+    delete from system_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="exam.com.cn.db.model.SystemAdmin" >
+    insert into system_admin (S_ID, S_NAME, S_PASSWORD, 
+      S_DESCRIPTION, S_CREATE_TIME, S_UPDATE_TIME
+      )
+    values (#{sId,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, #{sPassword,jdbcType=VARCHAR}, 
+      #{sDescription,jdbcType=VARCHAR}, #{sCreateTime,jdbcType=TIMESTAMP}, #{sUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="exam.com.cn.db.model.SystemAdmin" >
+    insert into system_admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        S_ID,
+      </if>
+      <if test="sName != null" >
+        S_NAME,
+      </if>
+      <if test="sPassword != null" >
+        S_PASSWORD,
+      </if>
+      <if test="sDescription != null" >
+        S_DESCRIPTION,
+      </if>
+      <if test="sCreateTime != null" >
+        S_CREATE_TIME,
+      </if>
+      <if test="sUpdateTime != null" >
+        S_UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        #{sId,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null" >
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sPassword != null" >
+        #{sPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="sDescription != null" >
+        #{sDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="sCreateTime != null" >
+        #{sCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sUpdateTime != null" >
+        #{sUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="exam.com.cn.db.model.SystemAdminQuery" resultType="java.lang.Integer" >
+    select count(*) from system_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update system_admin
+    <set >
+      <if test="record.sId != null" >
+        S_ID = #{record.sId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sName != null" >
+        S_NAME = #{record.sName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sPassword != null" >
+        S_PASSWORD = #{record.sPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sDescription != null" >
+        S_DESCRIPTION = #{record.sDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sCreateTime != null" >
+        S_CREATE_TIME = #{record.sCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sUpdateTime != null" >
+        S_UPDATE_TIME = #{record.sUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update system_admin
+    set S_ID = #{record.sId,jdbcType=VARCHAR},
+      S_NAME = #{record.sName,jdbcType=VARCHAR},
+      S_PASSWORD = #{record.sPassword,jdbcType=VARCHAR},
+      S_DESCRIPTION = #{record.sDescription,jdbcType=VARCHAR},
+      S_CREATE_TIME = #{record.sCreateTime,jdbcType=TIMESTAMP},
+      S_UPDATE_TIME = #{record.sUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="exam.com.cn.db.model.SystemAdmin" >
+    update system_admin
+    <set >
+      <if test="sName != null" >
+        S_NAME = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sPassword != null" >
+        S_PASSWORD = #{sPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="sDescription != null" >
+        S_DESCRIPTION = #{sDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="sCreateTime != null" >
+        S_CREATE_TIME = #{sCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sUpdateTime != null" >
+        S_UPDATE_TIME = #{sUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where S_ID = #{sId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="exam.com.cn.db.model.SystemAdmin" >
+    update system_admin
+    set S_NAME = #{sName,jdbcType=VARCHAR},
+      S_PASSWORD = #{sPassword,jdbcType=VARCHAR},
+      S_DESCRIPTION = #{sDescription,jdbcType=VARCHAR},
+      S_CREATE_TIME = #{sCreateTime,jdbcType=TIMESTAMP},
+      S_UPDATE_TIME = #{sUpdateTime,jdbcType=TIMESTAMP}
+    where S_ID = #{sId,jdbcType=VARCHAR}
+  </update>
+</mapper>

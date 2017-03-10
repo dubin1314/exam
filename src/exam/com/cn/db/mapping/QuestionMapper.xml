@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="exam.com.cn.db.dao.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="exam.com.cn.db.model.Question" >
+    <id column="Q_ID" property="qId" jdbcType="VARCHAR" />
+    <result column="Q_ CLASSIFY_ID" property="qClassifyId" jdbcType="VARCHAR" />
+    <result column="Q_TYPE" property="qType" jdbcType="INTEGER" />
+    <result column="Q_TITLE" property="qTitle" jdbcType="VARCHAR" />
+    <result column="Q_ OPTION_A" property="qOptionA" jdbcType="VARCHAR" />
+    <result column="Q_ OPTION_B" property="qOptionB" jdbcType="VARCHAR" />
+    <result column="Q_ OPTION_C" property="qOptionC" jdbcType="VARCHAR" />
+    <result column="Q_ OPTION_D" property="qOptionD" jdbcType="VARCHAR" />
+    <result column="Q_ OPTION_E" property="qOptionE" jdbcType="VARCHAR" />
+    <result column="Q_ OPTION_F" property="qOptionF" jdbcType="VARCHAR" />
+    <result column="Q_ANSWER" property="qAnswer" jdbcType="VARCHAR" />
+    <result column="Q_KNOWLEDGE" property="qKnowledge" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Q_ID, "Q_ CLASSIFY_ID", Q_TYPE, Q_TITLE, "Q_ OPTION_A", "Q_ OPTION_B", "Q_ OPTION_C", 
+    "Q_ OPTION_D", "Q_ OPTION_E", "Q_ OPTION_F", Q_ANSWER, Q_KNOWLEDGE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="exam.com.cn.db.model.QuestionQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from question
+    where Q_ID = #{qId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from question
+    where Q_ID = #{qId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="exam.com.cn.db.model.QuestionQuery" >
+    delete from question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="exam.com.cn.db.model.Question" >
+    insert into question (Q_ID, "Q_ CLASSIFY_ID", Q_TYPE, 
+      Q_TITLE, "Q_ OPTION_A", "Q_ OPTION_B", 
+      "Q_ OPTION_C", "Q_ OPTION_D", "Q_ OPTION_E", 
+      "Q_ OPTION_F", Q_ANSWER, Q_KNOWLEDGE
+      )
+    values (#{qId,jdbcType=VARCHAR}, #{qClassifyId,jdbcType=VARCHAR}, #{qType,jdbcType=INTEGER}, 
+      #{qTitle,jdbcType=VARCHAR}, #{qOptionA,jdbcType=VARCHAR}, #{qOptionB,jdbcType=VARCHAR}, 
+      #{qOptionC,jdbcType=VARCHAR}, #{qOptionD,jdbcType=VARCHAR}, #{qOptionE,jdbcType=VARCHAR}, 
+      #{qOptionF,jdbcType=VARCHAR}, #{qAnswer,jdbcType=VARCHAR}, #{qKnowledge,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="exam.com.cn.db.model.Question" >
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qId != null" >
+        Q_ID,
+      </if>
+      <if test="qClassifyId != null" >
+        "Q_ CLASSIFY_ID",
+      </if>
+      <if test="qType != null" >
+        Q_TYPE,
+      </if>
+      <if test="qTitle != null" >
+        Q_TITLE,
+      </if>
+      <if test="qOptionA != null" >
+        "Q_ OPTION_A",
+      </if>
+      <if test="qOptionB != null" >
+        "Q_ OPTION_B",
+      </if>
+      <if test="qOptionC != null" >
+        "Q_ OPTION_C",
+      </if>
+      <if test="qOptionD != null" >
+        "Q_ OPTION_D",
+      </if>
+      <if test="qOptionE != null" >
+        "Q_ OPTION_E",
+      </if>
+      <if test="qOptionF != null" >
+        "Q_ OPTION_F",
+      </if>
+      <if test="qAnswer != null" >
+        Q_ANSWER,
+      </if>
+      <if test="qKnowledge != null" >
+        Q_KNOWLEDGE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qId != null" >
+        #{qId,jdbcType=VARCHAR},
+      </if>
+      <if test="qClassifyId != null" >
+        #{qClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="qType != null" >
+        #{qType,jdbcType=INTEGER},
+      </if>
+      <if test="qTitle != null" >
+        #{qTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionA != null" >
+        #{qOptionA,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionB != null" >
+        #{qOptionB,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionC != null" >
+        #{qOptionC,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionD != null" >
+        #{qOptionD,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionE != null" >
+        #{qOptionE,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionF != null" >
+        #{qOptionF,jdbcType=VARCHAR},
+      </if>
+      <if test="qAnswer != null" >
+        #{qAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="qKnowledge != null" >
+        #{qKnowledge,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="exam.com.cn.db.model.QuestionQuery" resultType="java.lang.Integer" >
+    select count(*) from question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update question
+    <set >
+      <if test="record.qId != null" >
+        Q_ID = #{record.qId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qClassifyId != null" >
+        "Q_ CLASSIFY_ID" = #{record.qClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qType != null" >
+        Q_TYPE = #{record.qType,jdbcType=INTEGER},
+      </if>
+      <if test="record.qTitle != null" >
+        Q_TITLE = #{record.qTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qOptionA != null" >
+        "Q_ OPTION_A" = #{record.qOptionA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qOptionB != null" >
+        "Q_ OPTION_B" = #{record.qOptionB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qOptionC != null" >
+        "Q_ OPTION_C" = #{record.qOptionC,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qOptionD != null" >
+        "Q_ OPTION_D" = #{record.qOptionD,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qOptionE != null" >
+        "Q_ OPTION_E" = #{record.qOptionE,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qOptionF != null" >
+        "Q_ OPTION_F" = #{record.qOptionF,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qAnswer != null" >
+        Q_ANSWER = #{record.qAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qKnowledge != null" >
+        Q_KNOWLEDGE = #{record.qKnowledge,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update question
+    set Q_ID = #{record.qId,jdbcType=VARCHAR},
+      "Q_ CLASSIFY_ID" = #{record.qClassifyId,jdbcType=VARCHAR},
+      Q_TYPE = #{record.qType,jdbcType=INTEGER},
+      Q_TITLE = #{record.qTitle,jdbcType=VARCHAR},
+      "Q_ OPTION_A" = #{record.qOptionA,jdbcType=VARCHAR},
+      "Q_ OPTION_B" = #{record.qOptionB,jdbcType=VARCHAR},
+      "Q_ OPTION_C" = #{record.qOptionC,jdbcType=VARCHAR},
+      "Q_ OPTION_D" = #{record.qOptionD,jdbcType=VARCHAR},
+      "Q_ OPTION_E" = #{record.qOptionE,jdbcType=VARCHAR},
+      "Q_ OPTION_F" = #{record.qOptionF,jdbcType=VARCHAR},
+      Q_ANSWER = #{record.qAnswer,jdbcType=VARCHAR},
+      Q_KNOWLEDGE = #{record.qKnowledge,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="exam.com.cn.db.model.Question" >
+    update question
+    <set >
+      <if test="qClassifyId != null" >
+        "Q_ CLASSIFY_ID" = #{qClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="qType != null" >
+        Q_TYPE = #{qType,jdbcType=INTEGER},
+      </if>
+      <if test="qTitle != null" >
+        Q_TITLE = #{qTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionA != null" >
+        "Q_ OPTION_A" = #{qOptionA,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionB != null" >
+        "Q_ OPTION_B" = #{qOptionB,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionC != null" >
+        "Q_ OPTION_C" = #{qOptionC,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionD != null" >
+        "Q_ OPTION_D" = #{qOptionD,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionE != null" >
+        "Q_ OPTION_E" = #{qOptionE,jdbcType=VARCHAR},
+      </if>
+      <if test="qOptionF != null" >
+        "Q_ OPTION_F" = #{qOptionF,jdbcType=VARCHAR},
+      </if>
+      <if test="qAnswer != null" >
+        Q_ANSWER = #{qAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="qKnowledge != null" >
+        Q_KNOWLEDGE = #{qKnowledge,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Q_ID = #{qId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="exam.com.cn.db.model.Question" >
+    update question
+    set "Q_ CLASSIFY_ID" = #{qClassifyId,jdbcType=VARCHAR},
+      Q_TYPE = #{qType,jdbcType=INTEGER},
+      Q_TITLE = #{qTitle,jdbcType=VARCHAR},
+      "Q_ OPTION_A" = #{qOptionA,jdbcType=VARCHAR},
+      "Q_ OPTION_B" = #{qOptionB,jdbcType=VARCHAR},
+      "Q_ OPTION_C" = #{qOptionC,jdbcType=VARCHAR},
+      "Q_ OPTION_D" = #{qOptionD,jdbcType=VARCHAR},
+      "Q_ OPTION_E" = #{qOptionE,jdbcType=VARCHAR},
+      "Q_ OPTION_F" = #{qOptionF,jdbcType=VARCHAR},
+      Q_ANSWER = #{qAnswer,jdbcType=VARCHAR},
+      Q_KNOWLEDGE = #{qKnowledge,jdbcType=VARCHAR}
+    where Q_ID = #{qId,jdbcType=VARCHAR}
+  </update>
+</mapper>
